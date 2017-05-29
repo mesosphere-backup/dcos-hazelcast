@@ -23,7 +23,10 @@ import com.hazelcast.nio.Address;
 import com.hazelcast.spi.discovery.AbstractDiscoveryStrategy;
 import com.hazelcast.spi.discovery.DiscoveryNode;
 import com.hazelcast.spi.discovery.SimpleDiscoveryNode;
+import mesosphere.marathon.hazelcast.MarathonHazelcastApp;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.DirContext;
@@ -34,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MarathonDiscoveryStrategy extends AbstractDiscoveryStrategy {
+  private static final Logger LOG = LoggerFactory.getLogger(MarathonHazelcastApp.class);
   private static final String[] SRV_RECORD = new String[]{"SRV"};
   private static final Hashtable<String, String> NAMING_CONF;
 
@@ -44,15 +48,13 @@ public class MarathonDiscoveryStrategy extends AbstractDiscoveryStrategy {
   }
 
   private final String dnsName;
-  private final ILogger log;
 
   MarathonDiscoveryStrategy(ILogger logger, Map<String, Comparable> properties) {
     super(logger, properties);
-    log = logger;
 
-    String appId = System.getenv("APP_ID");
-    this.dnsName = appId + "marathon.mesos";
-    log.info(String.format("Starting MarathonDiscoveryStrategy for app: '%s', dns name: '%s'", appId, dnsName));
+    String appId = System.getenv("MARATHON_APP_ID").replace("/", "");
+    this.dnsName = String.format("_%s._tcp.marathon.mesos", appId);
+    LOG.info(String.format("Starting MarathonDiscoveryStrategy for app: '%s', dns name: '%s'", appId, dnsName));
   }
 
   @Override
@@ -65,13 +67,14 @@ public class MarathonDiscoveryStrategy extends AbstractDiscoveryStrategy {
 
       while (resolved.hasMore()) {
         Address address = resolveAddressFromSrvRecord((String) resolved.next());
-        log.info(String.format("DNS name '%s' resolved to address '%s'", dnsName, address));
+        LOG.info(String.format("DNS name '%s' resolved to address '%s'", dnsName, address));
         servers.add(new SimpleDiscoveryNode(address));
       }
     } catch (Exception e) {
       throw new RuntimeException(String.format("DNS name '%s' not resolvable", dnsName), e);
     }
 
+    LOG.info("During DNS resolving, got #servers: " + servers.size());
     return servers;
   }
 

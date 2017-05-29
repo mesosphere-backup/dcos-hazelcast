@@ -19,15 +19,25 @@ package mesosphere.marathon.hazelcast;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.XmlConfigBuilder;
 import com.hazelcast.core.Hazelcast;
-import com.hazelcast.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MarathonHazelcastApp {
+
+  private static final Logger LOG = LoggerFactory.getLogger(MarathonHazelcastApp.class);
 
   public static void main(String[] args) {
     Config config = new XmlConfigBuilder(MarathonHazelcastApp.class.getClassLoader().getResourceAsStream("dcos-hazelcast.xml")).build();
     setPropertyIfPresent(config, "hazelcast.rest.enabled", "HAZELCAST_REST_ENABLED", "true");
     setPropertyIfPresent(config, "hazelcast.memcache.enabled", "HAZELCAST_MEMCACHE_ENABLED", "false");
+
+    try {
+      config.getNetworkConfig().setPort(Integer.parseInt(System.getenv("PORT0")));
+    } catch (Exception o_O) {
+      LOG.warn("Unable to get port from environment", o_O);
+      config.getNetworkConfig().setPort(5701);
+    }
 
     Hazelcast.newHazelcastInstance(config);
   }
