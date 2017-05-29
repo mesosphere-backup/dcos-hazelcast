@@ -43,26 +43,30 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.4.1</version>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-              <mainClass>mesosphere.marathon.hazelcast.MarathonHazelcastApp</mainClass>
-            </manifest>
-          </archive>
-
-        </configuration>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.0.0</version>
         <executions>
           <execution>
-            <id>make-assembly</id>
             <phase>package</phase>
             <goals>
-              <goal>single</goal>
+              <goal>shade</goal>
             </goals>
+            <configuration>
+              <filters>
+                <filter>
+                  <artifact>com.hazelcast:hazelcast</artifact>
+                  <excludes>
+                    <exclude>META-INF/services/com.hazelcast.spi.discovery.DiscoveryStrategyFactory</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <!-- add Main-Class to manifest file -->
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>mesosphere.marathon.hazelcast.MarathonHazelcastApp</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
       </plugin>
