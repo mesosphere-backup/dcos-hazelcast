@@ -7,21 +7,28 @@
         "type":"DOCKER",
         "docker":{  
           "image":"unterstein/marathon-hazelcast",
+          "network":"USER",
           "forcePullImage":true
         },
         "portMappings":[
             {
-               "hostPort":0,
+               "hostPort":5701,
                "containerPort":5701,
                "protocol":"tcp"
             }
          ]
       },
+      "env": {
+        "HAZELCAST_MIN_CLUSTER_SIZE": "3"
+      },
+      "ipAddress":{  
+        "networkName":"dcos"
+      },
       "healthChecks":[
         {
           "protocol":"HTTP",
           "path":"/hazelcast/health",
-          "portIndex":0,
+          "port":5701,
           "timeoutSeconds":10,
           "gracePeriodSeconds":240,
           "intervalSeconds":10,

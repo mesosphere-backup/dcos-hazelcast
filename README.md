@@ -2,4 +2,4 @@
 
 
 # Credits
-Kudos to Luca Burgazzoli who wrote the hazelcast dns discovery strategy. The marathon-hazelcast container using some ideas of this implementation and the example app has this artifact as dependency.
+Kudos to Luca Burgazzoli who wrote the hazelcast dns discovery strategy. The example app uses this discovery to find the hazelcast cluster.

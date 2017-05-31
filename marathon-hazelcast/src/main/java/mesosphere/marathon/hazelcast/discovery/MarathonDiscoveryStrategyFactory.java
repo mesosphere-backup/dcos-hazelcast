@@ -1,8 +1,6 @@
 /*
  * Copyright 2017 Johannes Unterstein (junterstein@mesosphere.io)
  *
- * Initial version by Luca Burgazzoli (https://github.com/lburgazzoli/hazelcast-discovery-dns)
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at

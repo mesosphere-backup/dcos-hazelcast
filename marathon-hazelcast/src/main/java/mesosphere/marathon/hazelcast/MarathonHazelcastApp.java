@@ -26,19 +26,16 @@ import org.slf4j.LoggerFactory;
 public class MarathonHazelcastApp {
 
   private static final Logger LOG = LoggerFactory.getLogger(MarathonHazelcastApp.class);
+  public static int minMembers;
 
   public static void main(String[] args) {
     Config config = new XmlConfigBuilder(MarathonHazelcastApp.class.getClassLoader().getResourceAsStream("dcos-hazelcast.xml")).build();
     setPropertyIfPresent(config, "hazelcast.rest.enabled", "HAZELCAST_REST_ENABLED", "true");
     setPropertyIfPresent(config, "hazelcast.memcache.enabled", "HAZELCAST_MEMCACHE_ENABLED", "false");
+    setPropertyIfPresent(config, "hazelcast.initial.min.cluster.size", "HAZELCAST_MIN_CLUSTER_SIZE", "1");
+    config.getNetworkConfig().setPort(5701);
 
-    try {
-      config.getNetworkConfig().setPort(Integer.parseInt(System.getenv("PORT0")));
-    } catch (Exception o_O) {
-      LOG.warn("Unable to get port from environment", o_O);
-      config.getNetworkConfig().setPort(5701);
-    }
-
+    minMembers = Integer.parseInt(config.getProperty("hazelcast.initial.min.cluster.size"));
     Hazelcast.newHazelcastInstance(config);
   }
 
