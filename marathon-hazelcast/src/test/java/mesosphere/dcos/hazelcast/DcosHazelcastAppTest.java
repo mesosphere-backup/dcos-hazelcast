@@ -1,4 +1,4 @@
-package mesosphere.marathon.hazelcast;
+package mesosphere.dcos.hazelcast;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class MarathonHazelcastAppTest
+public class DcosHazelcastAppTest
     extends TestCase
 {
     /**
@@ -15,7 +15,7 @@ public class MarathonHazelcastAppTest
      *
      * @param testName name of the test case
      */
-    public MarathonHazelcastAppTest(String testName )
+    public DcosHazelcastAppTest(String testName )
     {
         super( testName );
     }
@@ -25,7 +25,7 @@ public class MarathonHazelcastAppTest
      */
     public static Test suite()
     {
-        return new TestSuite( MarathonHazelcastAppTest.class );
+        return new TestSuite( DcosHazelcastAppTest.class );
     }
 
     /**

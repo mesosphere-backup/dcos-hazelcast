@@ -16,7 +16,7 @@
             <discovery-strategies>
                 <discovery-strategy
                         enabled="true"
-                        class="mesosphere.marathon.hazelcast.discovery.MarathonDiscoveryStrategy">
+                        class="mesosphere.dcos.hazelcast.discovery.DcosDiscoveryStrategy">
                     <properties></properties>
                 </discovery-strategy>
             </discovery-strategies>

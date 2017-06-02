@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mesosphere.marathon.hazelcast;
+package mesosphere.dcos.hazelcast;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.XmlConfigBuilder;
@@ -23,19 +23,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MarathonHazelcastApp {
+public class DcosHazelcastApp {
 
-  private static final Logger LOG = LoggerFactory.getLogger(MarathonHazelcastApp.class);
-  public static int minMembers;
+  private static final Logger LOG = LoggerFactory.getLogger(DcosHazelcastApp.class);
 
   public static void main(String[] args) {
-    Config config = new XmlConfigBuilder(MarathonHazelcastApp.class.getClassLoader().getResourceAsStream("dcos-hazelcast.xml")).build();
+    Config config = new XmlConfigBuilder(DcosHazelcastApp.class.getClassLoader().getResourceAsStream("dcos-hazelcast.xml")).build();
     setPropertyIfPresent(config, "hazelcast.rest.enabled", "HAZELCAST_REST_ENABLED", "true");
     setPropertyIfPresent(config, "hazelcast.memcache.enabled", "HAZELCAST_MEMCACHE_ENABLED", "false");
     setPropertyIfPresent(config, "hazelcast.initial.min.cluster.size", "HAZELCAST_MIN_CLUSTER_SIZE", "1");
     config.getNetworkConfig().setPort(5701);
 
-    minMembers = Integer.parseInt(config.getProperty("hazelcast.initial.min.cluster.size"));
     Hazelcast.newHazelcastInstance(config);
   }
 

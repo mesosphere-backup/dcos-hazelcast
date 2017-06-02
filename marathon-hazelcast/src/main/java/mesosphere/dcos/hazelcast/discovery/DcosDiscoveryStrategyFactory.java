@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mesosphere.marathon.hazelcast.discovery;
+package mesosphere.dcos.hazelcast.discovery;
 
 
 import com.hazelcast.config.properties.PropertyDefinition;
@@ -26,17 +26,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-public class MarathonDiscoveryStrategyFactory implements DiscoveryStrategyFactory {
+public class DcosDiscoveryStrategyFactory implements DiscoveryStrategyFactory {
 
   @Override
   public Class<? extends DiscoveryStrategy> getDiscoveryStrategyType() {
-    return MarathonDiscoveryStrategy.class;
+    return DcosDiscoveryStrategy.class;
   }
 
   @Override
   public DiscoveryStrategy newDiscoveryStrategy(
       DiscoveryNode discoveryNode, ILogger logger, Map<String, Comparable> properties) {
-    return new MarathonDiscoveryStrategy(logger, properties);
+    return new DcosDiscoveryStrategy(logger, properties);
   }
 
   @Override

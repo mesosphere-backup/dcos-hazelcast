@@ -1,1 +1,1 @@
-mesosphere.marathon.hazelcast.discovery.MarathonDiscoveryStrategyFactory
+mesosphere.dcos.hazelcast.discovery.DcosDiscoveryStrategyFactory
