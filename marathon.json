@@ -1,12 +1,12 @@
 {  
-      "id":"hazelcast",
+      "id":"/my/fancy/org/hazelcast",
       "cpus":0.5,
       "mem":2000,
       "instances":3,
       "container":{  
         "type":"DOCKER",
         "docker":{  
-          "image":"unterstein/marathon-hazelcast",
+          "image":"unterstein/dcos-hazelcast",
           "network":"USER",
           "forcePullImage":true
         },
