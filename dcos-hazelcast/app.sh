@@ -1,9 +1,21 @@
 #!/bin/bash
 
-echo "muh $MARATHON_APP_ID"
-echo $HAZELCAST_MIN_CLUSTER_SIZE
+# calculating dns name for service discovery, see https://docs.mesosphere.com/1.8/usage/service-discovery/dns-overview/
+parts=$(echo $MARATHON_APP_ID | tr "/" " ")
 
-url="hazelcast.marathon.containerip.dcos.thisdcos.directory"
+# join the array together again by `-` as separator
+result=""
+separator=""
+for part in $parts
+do
+	result="$part$separator$result"
+	separator="-"
+done
+
+url="$result.marathon.autoip.dcos.thisdcos.directory"
+echo "URL using for service discovery: $url"
+
+# start try to gather dns date
 for i in {1..20}
 do
 	digs=`dig +short $url`
