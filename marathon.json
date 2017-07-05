@@ -1,5 +1,5 @@
 {  
-      "id":"/my/fancy/org/hazelcast",
+      "id":"hazelcast",
       "cpus":0.5,
       "mem":2000,
       "instances":3,
