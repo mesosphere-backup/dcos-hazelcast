@@ -1,38 +1,38 @@
-{  
-      "id":"hazelcast",
-      "cpus":0.5,
-      "mem":2000,
-      "instances":3,
-      "container":{  
-        "type":"DOCKER",
-        "docker":{  
-          "image":"unterstein/dcos-hazelcast",
-          "network":"USER",
-          "forcePullImage":true
-        },
-        "portMappings":[
-            {
-               "hostPort":5701,
-               "containerPort":5701,
-               "protocol":"tcp"
-            }
-         ]
-      },
-      "env": {
-        "HAZELCAST_MIN_CLUSTER_SIZE": "3"
-      },
-      "ipAddress":{  
-        "networkName":"dcos"
-      },
-      "healthChecks":[
-        {
-          "protocol":"HTTP",
-          "path":"/hazelcast/health",
-          "port":5701,
-          "timeoutSeconds":10,
-          "gracePeriodSeconds":240,
-          "intervalSeconds":10,
-          "maxConsecutiveFailures":10
-        }
-      ]
+{
+  "id": "hazelcast",
+  "cpus": 0.5,
+  "mem": 2000,
+  "instances": 3,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "unterstein/dcos-hazelcast",
+      "network": "USER",
+      "forcePullImage": true
+    },
+    "portMappings": [
+      {
+        "hostPort": 5701,
+        "containerPort": 5701,
+        "protocol": "tcp"
+      }
+    ]
+  },
+  "env": {
+    "HAZELCAST_MIN_CLUSTER_SIZE": "3"
+  },
+  "ipAddress": {
+    "networkName": "dcos"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/hazelcast/health",
+      "port": 5701,
+      "timeoutSeconds": 10,
+      "gracePeriodSeconds": 240,
+      "intervalSeconds": 10,
+      "maxConsecutiveFailures": 10
     }
+  ]
+}
