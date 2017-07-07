@@ -18,17 +18,6 @@
       ]
     }
   },
-  "healthChecks": [
-    {
-      "protocol": "HTTP",
-      "path": "/",
-      "portIndex": 0,
-      "timeoutSeconds": 10,
-      "gracePeriodSeconds": 240,
-      "intervalSeconds": 10,
-      "maxConsecutiveFailures": 10
-    }
-  ],
   "env": {
     "VIP_APP": "http://sample.marathon.l4lb.thisdcos.directory:8080",
     "AMOUNT": "10000"

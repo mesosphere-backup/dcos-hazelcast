@@ -1,8 +1,8 @@
-FROM java:8
+FROM ubuntu
 
 MAINTAINER Johannes Unterstein <junterstein@mesosphere.io>
 
-ADD target/load-generator-1.0-SNAPSHOT-jar-with-dependencies.jar /app.jar
-EXPOSE 8080
+RUN apt-get update && apt-get install -y pwgen curl && apt-get clean && rm -r /var/lib/apt/lists
+ADD app.sh /app.sh
 
-CMD ["java", "-jar", "/app.jar"]
+CMD ["/app.sh"]
