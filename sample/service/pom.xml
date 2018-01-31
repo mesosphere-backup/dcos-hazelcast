@@ -70,11 +70,29 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mesosphere-repo</id>
+            <name>Mesosphere Repo</name>
+            <url>http://downloads.mesosphere.io/maven</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>dcos</groupId>
+                <artifactId>dcos-maven-plugin</artifactId>
+                <version>0.3</version>
+                <configuration>
+                    <dcosUrl>https://your.cluster.amazonaws.com</dcosUrl>
+                    <ignoreSslCertificate>true</ignoreSslCertificate>
+                </configuration>
             </plugin>
         </plugins>
     </build>

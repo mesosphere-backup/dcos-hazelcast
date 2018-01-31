@@ -1,5 +1,6 @@
 #!/bin/bash
-echo $VIP_APP
+echo "Using this url to generate load: $VIP_APP"
+
 for ((i=0; i<=AMOUNT; i++));
 do
 	echo "Run: $i"
